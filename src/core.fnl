@@ -24,7 +24,6 @@ FLAGS
 (local default-out (.. "." separator :out))
 
 (fn set-options [path out verbose]
-  (print out)
   (when (not options.path)
     (set options.path (or path default-path)))
   (when (not options.out)
