@@ -44,8 +44,7 @@ FLAGS
 
 (fn write-file [file-path out-path text]
   "Write the .lua file to the output path"
-  (let [file-name (string.sub file-path (string.find file-path "%a+%.%a+") -1)
-        out-file (replace-ext out-path)
+  (let [out-file (replace-ext out-path)
         f (assert (io.open out-file :w+))]
     (f:write text)
     (when options.verbose
