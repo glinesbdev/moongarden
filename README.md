@@ -5,7 +5,7 @@ Moon Garden is a helper tool used for the [Fennel][1] programming language. This
 ```shell
 Moon Garden v0.0.1
 
-Usage: moongarden [FLAG] [FILE|DIRECTORY]
+Usage: moongarden [[--path [FILE|DIRECTORY]] [--out [DIRECTORY]] [,--verbose]]
 
 Outputs a structure of folders / files containing .fnl files and outputs the same structure as .lua files
 
