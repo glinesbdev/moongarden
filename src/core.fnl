@@ -3,12 +3,7 @@
 
 (local separator (package.config:sub 1 1))
 
-(fn version []
-  (let [f (assert (io.open (.. (lfs.currentdir) separator :.version) :r))]
-    (f:read :*all)))
-
-(local help (string.format "
-Moon Garden v%s
+(local help "
 Usage: moongarden [[--path [FILE|DIRECTORY]] [--out [DIRECTORY]] [,--verbose]]
 
 Outputs a structure of folders / files containing .fnl files and outputs the same structure as .lua files
@@ -17,7 +12,7 @@ FLAGS
   --path      : Relative path of the input files - Default ./src
   --out       : Relative path of the output files - Default ./out
   --verbose   : Shows the build output - Defalt false
-  -h, --help  : Show this help text" (version)))
+  -h, --help  : Show this help text")
 
 (local options {})
 (local default-path (.. "." separator :src))
