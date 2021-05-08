@@ -1,6 +1,18 @@
 # Moon Garden
 
-Moon Garden is a helper tool used for the [Fennel][1] programming language. This tool is aimed to make the general purpose programming experience for Fennel more smooth and easier to use.
+Moon Garden is a development streamlining tool for the [Fennel][1] programming language.\
+This tool is aimed to make the general purpose programming experience for Fennel smoother.\
+With help from the Fennel compiler, Moon Garden can compile .fnl to .lua files in a given directory as well as watching for file changes.
+
+## Installation
+
+Moon Garden can be downloaded from LuaRocks
+
+```shell
+luarocks install moongarden
+```
+
+## Usage
 
 ```shell
 Moon Garden v0.1.0
@@ -34,6 +46,10 @@ Released under the [MIT license](LICENSE).
 3. Submit a PR!
 4. ...profit?
 
+## Having Issues?
+
+[Let me know!][4]
+
 ## TODO:
 
 - Get file writing tests working
@@ -41,3 +57,4 @@ Released under the [MIT license](LICENSE).
 [1]: https://fennel-lang.org
 [2]: http://eradman.com/entrproject/
 [3]: https://docs.microsoft.com/en-us/windows/wsl/about
+[4]: https://github.com/glinesbdev/moongarden/issues
