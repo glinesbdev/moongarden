@@ -17,7 +17,7 @@ luarocks install moongarden
 ```shell
 Moon Garden v0.1.0
 
-Usage: moongarden [[--path [FILE|DIRECTORY]] [--out [DIRECTORY]] [,--verbose]]
+Usage: moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]
 
 Outputs a structure of folders / files containing .fnl files and outputs the same structure as .lua files
 
