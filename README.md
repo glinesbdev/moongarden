@@ -57,4 +57,4 @@ Released under the [MIT license](LICENSE).
 [1]: https://fennel-lang.org
 [2]: http://eradman.com/entrproject/
 [3]: https://docs.microsoft.com/en-us/windows/wsl/about
-[4]: https://github.com/glinesbdev/moongarden/issues
+[4]: https://github.com/glinesbdev/moongarden/issues/new/choose
