@@ -19,7 +19,13 @@ test: moongarden
 	@$(LUA) test/init.lua
 
 uploadrock: rockspecs/moongarden-$(VERSION)-1.rockspec
+	luarocks --local build $<
+	$(HOME)/.luarocks/bin/moongarden --version | grep $(VERSION)
+	luarocks --local remove moongarden
 	luarocks upload --sign --api-key $(shell pass luarocks-api-key) $<
+	luarocks --local install moongarden
+	$(HOME)/.luarocks/bin/moongarden --version | grep $(VERSION)
+	luarocks --local remove moongarden
 
 clean:
 	@rm moongarden
