@@ -26,6 +26,7 @@ FLAGS
   --out       : Relative path of the output files - Default ./out
   --verbose   : Shows the build output - Defalt false
   --watch     : Watches for files changes and copies from [path] to [out] - Default false
+  --version   : Shows the current build version of Moon Garden
   -h, --help  : Show this help text
 ```
 
