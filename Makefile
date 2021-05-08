@@ -18,8 +18,10 @@ install: moongarden
 test: moongarden
 	@$(LUA) test/init.lua
 
+uploadrock: rockspecs/moongarden-$(VERSION)-1.rockspec
+	luarocks upload --sign --api-key $(shell pass luarocks-api-key) $<
+
 clean:
-	echo $(VERSION)
 	@rm moongarden
 
-.PHONY: build moongarden test clean
+.PHONY: build moongarden test clean uploadrock

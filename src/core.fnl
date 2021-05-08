@@ -13,6 +13,7 @@ FLAGS
   --out       : Relative path of the output files - Default ./out
   --verbose   : Shows the build output - Defalt false
   --watch     : Watches for files changes and copies from [path] to [out] - Default false
+  --version   : Shows the current build version of Moon Garden
   -h, --help  : Show this help text")
 
 (local options {})
@@ -69,7 +70,7 @@ FLAGS
 
 (fn watch-files []
   "Watch the .fnl files in the [path] and ouput .lua files to [out] when they change"
-  (let [cmd (.. (string.format "find %s/ -name '*.fnl' | entr -np ./moongarden --path %s --out %s -wa "
+  (let [cmd (.. (string.format "find %s/ -name '*.fnl' | entr -np moongarden --path %s --out %s -wa "
                                options.path options.path options.out)
                 (if options.verbose :--verbose ""))]
     (os.execute cmd)))
@@ -81,13 +82,16 @@ FLAGS
     :--out (set options.out (. arg (+ i 1)))
     :--verbose (set options.verbose true)
     :--watch (set options.watch true)
-    :-wa (set options.watch-active true)
+    :--version (do
+                 (print (string.format "Moon Garden %s\n%s" :0.1.1 _VERSION))
+                 (os.exit 0))
     :--help (do
               (print help)
               (os.exit 0))
     :-h (do
           (print help)
-          (os.exit 0))))
+          (os.exit 0))
+    :-wa (set options.watch-active true)))
 
 (if options.watch
     (watch-files)

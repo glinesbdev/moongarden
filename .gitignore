@@ -1,5 +1,12 @@
+# Editor configs
 .vscode/
-input/
-out/
-moongarden
-*.rock
+
+/input
+/out
+/moongarden
+
+# Lua build files
+*.src.rock
+*.asc
+*.zip
+*.tar.gz

@@ -11,6 +11,10 @@
   (l.assertStrContains (moongarden :--help)
                        "Usage: moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]"))
 
+(fn test-version []
+  (l.assertEquals (moongarden :--version)
+                  (string.format "Moon Garden %s\n%s\n" :0.1.0 _VERSION)))
+
 ; TODO: Solidify this test and get it working
 ; (fn write-files []
 ;   (moongarden :--path :./test/input :--out :./test/out)
@@ -20,5 +24,5 @@
 ;         (if (= dir-mode :file)
 ;             (l.assertContains dir :.lua))))))
 
-{: test-help}
+{: test-help : test-version}
 
