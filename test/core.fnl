@@ -9,7 +9,7 @@
 
 (fn test-help []
   (l.assertStrContains (moongarden :--help)
-                       "Usage: moongarden [[--path [FILE|DIRECTORY]] [--out [DIRECTORY]] [,--verbose]]"))
+                       "Usage: moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]"))
 
 ; TODO: Solidify this test and get it working
 ; (fn write-files []

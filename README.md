@@ -3,7 +3,7 @@
 Moon Garden is a helper tool used for the [Fennel][1] programming language. This tool is aimed to make the general purpose programming experience for Fennel more smooth and easier to use.
 
 ```shell
-Moon Garden v0.0.1
+Moon Garden v0.1.0
 
 Usage: moongarden [[--path [FILE|DIRECTORY]] [--out [DIRECTORY]] [,--verbose]]
 
@@ -13,8 +13,13 @@ FLAGS
   --path      : Relative path of the input files - Default ./src
   --out       : Relative path of the output files - Default ./out
   --verbose   : Shows the build output - Defalt false
+  --watch     : Watches for files changes and copies from [path] to [out] - Default false
   -h, --help  : Show this help text
 ```
+
+### About --watch
+
+The `--watch` command relies on [entr][2] to watch when the .fnl files change as you save your work. Entr works on UNIX based systems and will need to be installed locally. Moon Garden will tell you if you don't have Entr installed if you try to use the `--watch` flag. You can use [WSL][3] (Windows Subsystem for Linux) when using Windows.
 
 ## License
 
@@ -32,6 +37,7 @@ Released under the [MIT license](LICENSE).
 ## TODO:
 
 - Get file writing tests working
-- Implement a file watcher
 
 [1]: https://fennel-lang.org
+[2]: http://eradman.com/entrproject/
+[3]: https://docs.microsoft.com/en-us/windows/wsl/about

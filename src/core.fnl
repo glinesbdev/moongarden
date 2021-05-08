@@ -4,7 +4,7 @@
 (local separator (package.config:sub 1 1))
 
 (local help "
-Usage: moongarden [[--path [FILE|DIRECTORY]] [--out [DIRECTORY]] [,--verbose]]
+Usage: moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]
 
 Outputs a structure of folders / files containing .fnl files and outputs the same structure as .lua files
 
@@ -12,19 +12,18 @@ FLAGS
   --path      : Relative path of the input files - Default ./src
   --out       : Relative path of the output files - Default ./out
   --verbose   : Shows the build output - Defalt false
+  --watch     : Watches for files changes and copies from [path] to [out] - Default false
   -h, --help  : Show this help text")
 
 (local options {})
 (local default-path (.. "." separator :src))
 (local default-out (.. "." separator :out))
 
-(fn set-options [path out verbose]
-  (when (not options.path)
-    (set options.path (or path default-path)))
-  (when (not options.out)
-    (set options.out (or out default-out)))
-  (when (not options.verbose)
-    (set options.verbose (or verbose false))))
+(local options {:path (.. "." separator :src)
+                :out (.. "." separator :out)
+                :verbose false
+                :watch false
+                :watch-active false})
 
 (fn replace-ext [file]
   (string.gsub file :.fnl :.lua))
@@ -49,7 +48,11 @@ FLAGS
   "Compile the .fnl file to a .lua file"
   (let [f (assert (io.open file-path :r))
         text (fennel.compile-string (f:read :*all))]
-    (write-file file-path out-path text)
+    (if options.watch-active
+        (let [last-changed (. (lfs.attributes file-path) :change)]
+          (when (>= last-changed (os.time))
+            (write-file file-path out-path text)))
+        (write-file file-path out-path text))
     (f:close)))
 
 (fn walk-files [path]
@@ -64,28 +67,29 @@ FLAGS
                                                                               (lfs.mkdir out-path)
                                                                               (walk-files dir-path))))))
 
-(match arg
-  ([] ? (= 0 (length arg))) (do
-                              (set-options)
-                              (walk-files options.path))
-  [:--path path :--out out :--verbose] (do
-                                         (set-options path out true)
-                                         (walk-files path))
-  [:--path path :--out out] (do
-                              (set-options path out)
-                              (walk-files path))
-  [:--path path :--verbose] (do
-                              (set-options path nil true)
-                              (walk-files path))
-  [:--path path] (do
-                   (set-options path)
-                   (walk-files path))
-  [:--out out] (do
-                 (set-options nil out)
-                 (walk-files options.path))
-  [:--verbose] (do
-                 (set-options nil nil true)
-                 (walk-files options.path))
-  [:-h] (print help)
-  [:--help] (print help))
+(fn watch-files []
+  "Watch the .fnl files in the [path] and ouput .lua files to [out] when they change"
+  (let [cmd (.. (string.format "find %s/ -name '*.fnl' | entr -np ./moongarden --path %s --out %s -wa "
+                               options.path options.path options.out)
+                (if options.verbose :--verbose ""))]
+    (os.execute cmd)))
+
+;; -wa is not public API and moongarden will behave strangely so DON'T USE IT! ...thanks
+(for [i (length arg) 1 -1]
+  (match (. arg i)
+    :--path (set options.path (. arg (+ i 1)))
+    :--out (set options.out (. arg (+ i 1)))
+    :--verbose (set options.verbose true)
+    :--watch (set options.watch true)
+    :-wa (set options.watch-active true)
+    :--help (do
+              (print help)
+              (os.exit 0))
+    :-h (do
+          (print help)
+          (os.exit 0))))
+
+(if options.watch
+    (watch-files)
+    (walk-files options.path))
 

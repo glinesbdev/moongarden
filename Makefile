@@ -19,6 +19,7 @@ test: moongarden
 	@$(LUA) test/init.lua
 
 clean:
+	echo $(VERSION)
 	@rm moongarden
 
 .PHONY: build moongarden test clean
