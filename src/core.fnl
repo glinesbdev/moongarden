@@ -69,7 +69,7 @@ FLAGS
                                                                               (walk-files dir-path))))))
 
 (fn watch-files []
-  "Watch the .fnl files in the [path] and ouput .lua files to [out] when they change"
+  "Watch the .fnl files in the [path] and output .lua files to [out] when they change"
   (let [cmd (.. (string.format "find %s/ -name '*.fnl' | entr -np moongarden --path %s --out %s -wa "
                                options.path options.path options.out)
                 (if options.verbose :--verbose ""))]
