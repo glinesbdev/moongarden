@@ -63,7 +63,10 @@ FLAGS
     (let [dir-path (.. path separator dir)
           dir-mode (. (lfs.attributes dir-path) :mode)
           out-path (string.gsub dir-path (.. "(" options.path ")") options.out)]
-      (if (= dir-mode :file) (compile dir-path out-path)
+      (if (= dir-mode :file)
+          (let [(suc err) (pcall compile dir-path out-path)]
+            (when (not suc)
+              (print (.. "Moongarden error report " dir-path "\n" (string.sub err 9 (# err))))))
           (and (= dir-mode :directory) (not (or (= "." dir) (= ".." dir)))) (do
                                                                               (lfs.mkdir out-path)
                                                                               (walk-files dir-path))))))
