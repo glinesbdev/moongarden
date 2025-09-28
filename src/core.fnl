@@ -42,8 +42,13 @@ FLAGS
         f (assert (io.open out-file :w+))]
     (f:write text)
     (when options.verbose
-      (print (.. "Writing file: " out-file)))
+      (print (.. "Compiled file: " out-file)))
     (f:close)))
+
+(fn copy-file [file-path target-path]
+  (os.execute (.. "cp " file-path " " target-path))
+  (when options.verbose
+    (print (.. "Copied file: " target-path))))
 
 (fn compile [file-path out-path]
   "Compile the .fnl file to a .lua file"
@@ -63,7 +68,8 @@ FLAGS
     (let [dir-path (.. path separator dir)
           dir-mode (. (lfs.attributes dir-path) :mode)
           out-path (string.gsub dir-path (.. "(" options.path ")") options.out)]
-      (if (= dir-mode :file)
+      (if (and (= dir-mode :file) (= (string.sub dir-path -4) ".lua")) (copy-file dir-path out-path)
+          (and (= dir-mode :file) (= (string.sub dir-path -4) ".fnl"))
           (let [(suc err) (pcall compile dir-path out-path)]
             (when (not suc)
               (print (.. "Moongarden error report " dir-path "\n" (string.sub err 9 (# err))))))
