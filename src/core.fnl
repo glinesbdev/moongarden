@@ -68,7 +68,7 @@ FLAGS
     (let [dir-path (.. path separator dir)
           dir-mode (. (lfs.attributes dir-path) :mode)
           out-path (string.gsub dir-path (.. "(" options.path ")") options.out)]
-      (if (and (= dir-mode :file) (= (string.sub dir-path -4) ".lua")) (copy-file dir-path out-path)
+      (if (and (= dir-mode :file) (or (= (string.sub dir-path -4) ".lua") (= (string.sub dir-path -5) ".luau"))) (copy-file dir-path out-path)
           (and (= dir-mode :file) (= (string.sub dir-path -4) ".fnl"))
           (let [(suc err) (pcall compile dir-path out-path)]
             (when (not suc)
