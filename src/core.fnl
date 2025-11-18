@@ -3,18 +3,21 @@
 
 (local separator (package.config:sub 1 1))
 
-(local help "
-Usage: moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]
+(local help "Outputs a structure of folders / files containing .fnl files and outputs the same structure as .lua files
 
-Outputs a structure of folders / files containing .fnl files and outputs the same structure as .lua files
+USAGE
+  moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]
+
+VERSION
+  _MOONGARDEN_VERSION
 
 FLAGS
-  --path      : Relative path of the input files - Default ./src
-  --out       : Relative path of the output files - Default ./out
-  --verbose   : Shows the build output - Defalt false
-  --watch     : Watches for files changes and copies from [path] to [out] - Default false
-  --version   : Shows the current build version of Moon Garden
-  -h, --help  : Show this help text")
+  --path        : Relative path of the input files - Default ./src
+  --out         : Relative path of the output files - Default ./out
+  --verbose     : Shows the build output - Defalt false
+  --watch       : Watches for files changes and copies from [path] to [out] - Default false
+  -v, --version : Shows the current build version of Moon Garden
+  -h, --help    : Show this help text")
 
 (local options {})
 (local default-path (.. "." separator :src))
@@ -84,6 +87,14 @@ FLAGS
                 (if options.verbose :--verbose ""))]
     (os.execute cmd)))
 
+(fn print-version []
+   (print (string.format "moongarden %s" :_MOONGARDEN_VERSION))
+   (os.exit 0))
+
+(fn print-help []
+  (print help)
+  (os.exit 0))
+
 ;; -wa is not public API and moongarden will behave strangely so DON'T USE IT! ...thanks
 (for [i (length arg) 1 -1]
   (match (. arg i)
@@ -91,15 +102,10 @@ FLAGS
     :--out (set options.out (. arg (+ i 1)))
     :--verbose (set options.verbose true)
     :--watch (set options.watch true)
-    :--version (do
-                 (print (string.format "Moon Garden %s\n%s" :0.1.1 _VERSION))
-                 (os.exit 0))
-    :--help (do
-              (print help)
-              (os.exit 0))
-    :-h (do
-          (print help)
-          (os.exit 0))
+    :--version (print-version)
+    :-v (print-version)
+    :--help (print-help)
+    :-h (print-help)
     :-wa (set options.watch-active true)))
 
 (if options.watch

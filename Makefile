@@ -1,18 +1,23 @@
 LUA ?= lua
-FENNEL ?= ./bin/fennel
+FENNEL ?= fennel
 DESTDIR ?=
 PREFIX ?= /usr/local
 BIN_DIR ?= $(PREFIX)/bin
+VERSION ?= $(shell cat VERSION)
 
 build: moongarden
 
 moongarden: src/core.fnl
 	@echo "#!/usr/bin/env $(LUA)" > $@
 	@$(FENNEL) --compile --no-metadata --require-as-include $< >> $@
+	@sed -i "s/_MOONGARDEN_VERSION/$(VERSION)/g" $@
 	@chmod 755 $@
 
+deps: rockspecs/moongarden-$(VERSION)-1.rockspec
+	@luarocks install --only-deps $<
+
 install: moongarden
-	mkdir -p $(DESTDIR)$(BIN_DIR) && \
+	@mkdir -p $(DESTDIR)$(BIN_DIR) && \
 		cp moongarden $(DESTDIR)$(BIN_DIR)/
 
 test: moongarden
@@ -30,4 +35,4 @@ uploadrock: rockspecs/moongarden-$(VERSION)-1.rockspec
 clean:
 	@rm moongarden
 
-.PHONY: build moongarden test clean uploadrock
+.PHONY: build deps moongarden test clean uploadrock
