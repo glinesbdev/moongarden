@@ -8,3 +8,7 @@
 
 - Using `fennel` from luarocks instead of a self-hosted binary and script.
 - Created a `VERSION` file.
+
+## 0.2.1 / 2025-11-19
+
+- Fix installation path

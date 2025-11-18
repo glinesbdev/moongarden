@@ -21,7 +21,7 @@ USAGE
   moongarden [--path FILE|DIRECTORY] [--out DIRECTORY] [,--verbose] [,--watch]
 
 VERSION
-  0.2.0
+  0.2.1
 
 FLAGS
   --path        : Relative path of the input files - Default ./src

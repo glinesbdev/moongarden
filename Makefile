@@ -1,7 +1,7 @@
 LUA ?= lua
 FENNEL ?= fennel
 DESTDIR ?=
-PREFIX ?= /usr/local
+PREFIX ?= $(HOME)/.luarocks
 BIN_DIR ?= $(PREFIX)/bin
 VERSION ?= $(shell cat VERSION)
 
