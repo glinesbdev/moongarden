@@ -76,6 +76,6 @@ Released under the [MIT license](LICENSE).
 [2]: http://eradman.com/entrproject/
 [3]: https://docs.microsoft.com/en-us/windows/wsl/about
 [4]: https://github.com/glinesbdev/moongarden/issues/new/choose
-[5]: https://github.com/luarocks/luarocks/blob/main/docs/download.md
-[6]: https://github.com/luarocks/luarocks/blob/main/docs/download.md
+[5]: https://luarocks.org/modules/hisham/luafilesystem
+[6]: https://luarocks.org/modules/fennel/fennel
 [7]: https://github.com/luarocks/luarocks/blob/main/docs/download.md
