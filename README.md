@@ -36,7 +36,7 @@ FLAGS
 
 The `--watch` command relies on [entr][2] to watch when the .fnl files change as you save your work. Entr works on UNIX based systems and will need to be installed locally. Moon Garden will tell you if you don't have Entr installed if you try to use the `--watch` flag. You can use [WSL][3] (Windows Subsystem for Linux) when using Windows.
 
-## Moon Garden Dependencies
+## Dependencies
 
 There are two dependencies that Moon Garden relies on:
 
